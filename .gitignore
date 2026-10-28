@@ -143,3 +143,16 @@ scripts/exp/ablation/targets_rq2*.txt
 /runs/
 _build/
 .pytest_cache/
+
+# ── kafka branch: cloud-session additions (override upstream ignores) ──
+!.claude/skills
+!.claude/skills/*
+!.mcp.json
+!CLAUDE.md
+!lib/
+!lib/tla2tools.jar
+!lib/CommunityModules-deps.jar
+# Kafka checkout and tool venvs are created by cloud/setup.sh
+/kafka/
+tools/*/.venv/
+tools/cfa/target/

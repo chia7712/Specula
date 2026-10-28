@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "tracedebugger": {
+      "type": "stdio",
+      "command": "bash",
+      "args": ["cloud/mcp.sh", "tracedebugger"]
+    },
+    "spec_analyzer": {
+      "type": "stdio",
+      "command": "bash",
+      "args": ["cloud/mcp.sh", "spec_analyzer"]
+    },
+    "inv_checking_tool": {
+      "type": "stdio",
+      "command": "bash",
+      "args": ["cloud/mcp.sh", "inv_checking_tool"]
+    }
+  }
+}
