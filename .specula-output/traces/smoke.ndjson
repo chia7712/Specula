@@ -1,0 +1,12 @@
+{"tag":"trace","event":{"name":"Config","topicOf":{"p1":"t1","p2":"t1"},"regexMatch":{"A":["t1"],"B":[]},"subscriptions":[{"names":["t1"],"regex":""}],"initialSub":{"m1":{"names":["t1"],"regex":""},"m2":{"names":["t1"],"regex":""}}}}
+{"tag":"trace","event":{"name":"Load","b":"b1","post":{"st":"LOADING","epoch":1}}}
+{"tag":"trace","event":{"name":"LoaderFinish","b":"b1","ok":true}}
+{"tag":"trace","event":{"name":"CompleteLoad","b":"b1","ok":true,"post":{"st":"ACTIVE","groupEpoch":1}}}
+{"tag":"trace","event":{"name":"ClientJoin","m":"m1","reqId":1,"epoch":0,"owned":[],"sub":{"names":["t1"],"regex":""},"full":true}}
+{"tag":"trace","event":{"name":"Heartbeat","b":"b1","m":"m1","reqId":1,"err":"NONE","targets":{"m1":["p1","p2"]},"post":{"groupEpoch":2,"assignEpoch":2,"members":["m1"],"member":{"epoch":2,"prev":0,"state":"STABLE","assigned":["p1","p2"],"pending":[],"target":["p1","p2"]}}}}
+{"tag":"trace","event":{"name":"Flush","b":"b1","post":{"st":"ACTIVE","written":1,"committed":0,"logLen":{"b1":1}}}}
+{"tag":"trace","event":{"name":"Replicate","b":"b2","post":{"logLen":{"b2":1}}}}
+{"tag":"trace","event":{"name":"AdvanceHWM","hwm":1}}
+{"tag":"trace","event":{"name":"HWMDeliver","b":"b1","post":{"st":"ACTIVE","committed":1}}}
+{"tag":"trace","event":{"name":"ClientReceive","m":"m1","reqId":1,"post":{"epoch":2,"assignment":["p1","p2"]}}}
+{"tag":"trace","event":{"name":"ClientAssign","m":"m1","post":{"owned":["p1","p2"]}}}
