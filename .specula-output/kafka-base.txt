@@ -1,0 +1,1 @@
+kafka trunk 8aa57006ff5da4844776d1047bfee1619faea47f (no local changes in phase 1)
