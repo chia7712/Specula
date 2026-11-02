@@ -11,9 +11,17 @@ Apache Kafka inside a Claude Code cloud session.
   Build with `./gradlew` from inside `kafka/`. The VM has about 16 GB RAM, so
   pass `--max-workers=2` and prefer compiling only the modules you need, for
   example `./gradlew :group-coordinator:compileJava :coordinator-common:compileJava`.
-- Modeling guidance: `guidance/kafka-consumer-group-rebalance.md`. Read it
-  before starting any phase. It defines scope, priority questions and the
-  files to start from.
+- Modeling guidance: one file per target under `guidance/`. The first
+  message of a session names which one to use. Read it before starting any
+  phase. It defines scope, priority questions and the files to start from.
+  One session works on one target only; never run `/code-analysis` for a
+  second target in a session that already has `.specula-output/` from
+  another, because it would overwrite it. Available targets:
+  - `kafka-consumer-group-rebalance.md` (group-coordinator, KIP-848)
+  - `kafka-log-cleaner.md` (storage, compaction and crash recovery)
+  - `kafka-transaction-coordinator.md` (core + transaction-coordinator)
+  - `kafka-kraft-dynamic-quorum.md` (raft, KIP-853 / pre-vote / snapshots)
+  - `kafka-share-groups.md` (core share partition + share-coordinator)
 - Workflow: run the skills in order and stop after each one so the human can
   review the output in `.specula-output/` before continuing:
   `/code-analysis` -> `/spec-generation` -> `/harness-generation` ->

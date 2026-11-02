@@ -26,13 +26,17 @@ This branch (`kafka`) adds what a cloud session needs on top of upstream Specula
 
 ## Starting a run
 
-Send this as the first message of a session:
+One target per session. Pick a guidance file from `guidance/` and send this as the first
+message:
 
 ```
-Read guidance/kafka-consumer-group-rebalance.md. The target is Apache Kafka at ./kafka,
-modules group-coordinator and coordinator-common. Run /code-analysis and stop when
-modeling-brief.md is written.
+Read guidance/kafka-<target>.md. Run /code-analysis and stop when modeling-brief.md is
+written. Commit .specula-output/ and push before you finish.
 ```
+
+Several targets can run in parallel in separate sessions; each pushes to its own branch.
+The brief's test-verifiable (T-*) and code-review-only (CR-*) findings can be acted on
+without running the later phases.
 
 Then review `.specula-output/modeling-brief.md` and continue with
 `/spec-generation`, `/harness-generation`, `/validation-workflow`, `/bug-confirmation`,
