@@ -34,7 +34,8 @@ make_venv() {
   if [[ -n "$req" && -f "$req" ]]; then
     "$dir/.venv/bin/python" -I -m pip install -q -r "$req"
   else
-    "$dir/.venv/bin/python" -I -m pip install -q mcp
+    # The MCP servers use the low-level Server decorators removed in mcp 2.x.
+    "$dir/.venv/bin/python" -I -m pip install -q 'mcp>=1.28.1,<2'
   fi
 }
 
