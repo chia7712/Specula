@@ -6,6 +6,9 @@
 #   bash cloud/setup.sh
 #
 # The cloud VM already has Python 3, uv, OpenJDK 21, Maven and Gradle.
+# On a Fedora self-hosted runner, install them first:
+#
+#   sudo dnf install -y git python3-pip uv maven java-25-openjdk-devel
 # Everything this script writes to disk is cached by the environment snapshot,
 # so later sessions skip it. Keep total runtime under ~5 minutes.
 #
@@ -67,7 +70,11 @@ mkdir -p lib
   https://github.com/tlaplus/CommunityModules/releases/download/202505152026/CommunityModules-deps.jar || true
 
 # ── 6. gh CLI (optional; used by some confirmation steps) ───────────────────
-command -v gh >/dev/null 2>&1 || { apt-get update -qq && apt-get install -y -qq gh; } || true
+# Only on apt-based hosts (the cloud VM). Self-hosted runners keep no GitHub
+# credentials, so gh is not needed there.
+if ! command -v gh >/dev/null 2>&1 && command -v apt-get >/dev/null 2>&1; then
+  { apt-get update -qq && apt-get install -y -qq gh; } || true
+fi
 
 # ── Wait and report ─────────────────────────────────────────────────────────
 rc=0
@@ -76,7 +83,10 @@ for p in $p1 $p2 $p3 $p4 $p5 $p6 $p7; do
 done
 
 log "Verification"
-if java -cp lib/tla2tools.jar tlc2.TLC -help 2>&1 | grep -q "TLA+"; then echo "TLC OK"; else echo "TLC check failed"; fi
+# Capture first: piping into `grep -q` lets grep exit early, java gets SIGPIPE
+# and pipefail turns a working TLC into a false "check failed".
+tlc_help="$(java -cp lib/tla2tools.jar tlc2.TLC -help 2>&1 || true)"
+if grep -q "TLA+" <<<"$tlc_help"; then echo "TLC OK"; else echo "TLC check failed"; fi
 ls tools/cfa/target/*.jar 2>/dev/null || echo "CFA jar missing"
 [[ -x tools/trace_debugger/.venv/bin/python ]] && echo "trace_debugger venv OK"
 [[ -d kafka ]] && echo "kafka source at $ROOT/kafka"
