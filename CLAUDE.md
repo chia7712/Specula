@@ -25,8 +25,19 @@ Apache Kafka inside a Claude Code cloud session.
 - Workflow: run the skills in order and stop after each one so the human can
   review the output in `.specula-output/` before continuing:
   `/code-analysis` -> `/spec-generation` -> `/harness-generation` ->
-  `/validation-workflow` -> `/bug-confirmation`.
+  `/validation-workflow` -> `/bug-confirmation` -> `/bug-classification`.
   See `skills/workflow-overview.md` for what each phase produces.
+- `/bug-confirmation` report format: the skill only covers one finding, and
+  here no pipeline orchestrator wraps it. Apply it to every candidate from
+  `.specula-output/spec/bug-report.md` and `.specula-output/modeling-brief.md`
+  yourself, then write `.specula-output/confirmed-bugs.md` in the canonical
+  structure from
+  "3. Aggregate" in `src/specula/prompts/confirmation/orchestrate.md`: the
+  `| Entry | Finding | Status | Counts as final bug? |` table, then one
+  `## Entry N: <title>` section per row, numbered from 1 in table order.
+  Put the finding id (`MC-1`, `CR-2`) in the `Finding` column, not in the
+  heading. `/bug-classification` matches on these headings, so do not use
+  `## Bug N`.
 - TLC memory: keep the JVM heap at or below 8 GB (`-Xmx8g`) and never run
   more than one TLC instance at a time.
 - Persisting results: the VM disk disappears when the session ends. When a
